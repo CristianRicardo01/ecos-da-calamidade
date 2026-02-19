@@ -6,37 +6,57 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
 
-const SAVE_PATH = path.join(__dirname, "saves", "save.json");
+const SAVE_DIR = path.join(__dirname, "saves");
+const SAVE_PATH = path.join(SAVE_DIR, "save.json");
 
-// Criar pasta saves se não existir
-if (!fs.existsSync(path.join(__dirname, "saves"))) {
-    fs.mkdirSync(path.join(__dirname, "saves"));
+// Garantir que a pasta saves exista
+if (!fs.existsSync(SAVE_DIR)) {
+    fs.mkdirSync(SAVE_DIR);
 }
 
-// ===============================
-// API SAVE
-// ===============================
+// ======================
+// API
+// ======================
 
 app.get("/api/save", (req, res) => {
 
-    if (!fs.existsSync(SAVE_PATH)) {
-        return res.json(null);
-    }
+    try {
+        if (!fs.existsSync(SAVE_PATH)) {
+            return res.json(null);
+        }
 
-    const data = fs.readFileSync(SAVE_PATH);
-    res.json(JSON.parse(data));
+        const data = fs.readFileSync(SAVE_PATH, "utf-8");
+
+        if (!data) {
+            return res.json(null);
+        }
+
+        res.json(JSON.parse(data));
+
+    } catch (error) {
+        console.error("Erro ao ler save:", error);
+        res.status(500).json({ error: "Erro interno" });
+    }
 });
 
 app.post("/api/save", (req, res) => {
 
-    const saveData = req.body;
+    try {
+        fs.writeFileSync(SAVE_PATH, JSON.stringify(req.body, null, 2));
+        res.json({ status: "ok" });
 
-    fs.writeFileSync(SAVE_PATH, JSON.stringify(saveData, null, 2));
-
-    res.json({ status: "ok" });
+    } catch (error) {
+        console.error("Erro ao salvar:", error);
+        res.status(500).json({ error: "Erro ao salvar" });
+    }
 });
+
+// ======================
+// STATIC (SEMPRE POR ÚLTIMO)
+// ======================
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
