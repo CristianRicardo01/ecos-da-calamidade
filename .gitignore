@@ -1,0 +1,5 @@
+node_modules/
+saves/save.json
+package-lock.json (opcional manter)
+teste.html
+imagens teste/

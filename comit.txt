@@ -1,0 +1,8 @@
+git init
+git add .
+git commit -m "v0.3.0 - Migração para Node.js + Save em arquivo local"
+git branch -M main
+git remote add origin https://github.com/CristianRicardo01/ecos-da-calamidade.git
+git push -u origin main
+git tag v0.3.0
+git push origin v0.3.0

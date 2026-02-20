@@ -4,6 +4,13 @@
   "createdAt": 1771504600185,
   "nivel": 1,
   "energiaEspiritual": 10,
-  "pedrasEspirituais": 0,
-  "ultimoLogin": 1771504600185
+  "pedrasEspirituais": 21759,
+  "ultimoLogin": 1771613429066,
+  "mascote": {
+    "id": "LUMIFELIS",
+    "raridade": "raro",
+    "estadoAtual": "idle",
+    "nivel": 1,
+    "exp": 0
+  }
 }

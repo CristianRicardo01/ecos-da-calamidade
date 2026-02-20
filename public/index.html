@@ -8,7 +8,21 @@
 </head>
 
 <body>
+    <!-- 🔥 FILTRO ELÉTRICO GLOBAL (usar uma única vez) -->
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <filter id="electric-distortion">
+                <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="3" result="noise" seed="3">
+                    <animate attributeName="baseFrequency" dur="3s" values="0.015;0.02;0.015"
+                        repeatCount="indefinite" />
+                </feTurbulence>
 
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R"
+                    yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+    
     <div id="app"></div>
 
     <script src="core/apiSystem.js"></script>
